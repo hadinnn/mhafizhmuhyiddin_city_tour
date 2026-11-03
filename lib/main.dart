@@ -11,26 +11,55 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+      title: 'City Tour',
+      home: const HomeScreen(title: 'City Tour'),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    const imageUrls = [
+      'https://picsum.photos/id/162/300/200',
+      'https://picsum.photos/id/164/300/200',
+      'https://picsum.photos/id/174/300/200',
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(title),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      body: Column(
+        children: [
+          const SizedBox(height: 16.0),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                for (final imageUrl in imageUrls) ...[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: Image.network(
+                      imageUrl,
+                      width: 150,
+                      height: 300,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 12.0),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -102,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('You have pushed the button this many times:'),
             Text(
